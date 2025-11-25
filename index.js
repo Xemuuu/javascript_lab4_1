@@ -19,8 +19,25 @@ app.get('/math/rectangle/:width/:height', (req, res) => {
   res.json({ area, perimeter });
 });
 
+app.get('/math/power/:base/:exponent', (req, res) => {
+  const base = parseFloat(req.params.base);
+  const exponent = parseFloat(req.params.exponent);
+  const root = req.query.root === 'true';
 
-//TODO3
+  if (isNaN(base) || isNaN(exponent)) {
+    return res.status(400).json({ error: 'Invalid input' });
+  }
+
+  const result = Math.pow(base, exponent);
+  const response = { result };
+
+  if (root) {
+    response.root = Math.sqrt(base);
+  }
+
+  res.json(response);
+});
+
 
 
 const PORT = process.env.PORT || 3000;
